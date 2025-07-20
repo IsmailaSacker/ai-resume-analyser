@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import ScoreCircle from "./ScoreCircle";
+import { usePuterStore } from "~/lib/puter";
 
 const ResumeCard = ({
   resume: { id, companyName, jobTitle, feedback, imagePath },
 }: {
   resume: Resume;
 }) => {
-  // const { fs } = usePuterStore();
-  // const [resumeUrl, setResumeUrl] = useState('');
+  const { fs } = usePuterStore();
+  const [resumeUrl, setResumeUrl] = useState("");
 
-  // useEffect(() => {
-  //     const loadResume = async () => {
-  //         const blob = await fs.read(imagePath);
-  //         if(!blob) return;
-  //         let url = URL.createObjectURL(blob);
-  //         setResumeUrl(url);
-  //     }
+  useEffect(() => {
+    const loadResume = async () => {
+      const blob = await fs.read(imagePath);
+      if (!blob) return;
+      let url = URL.createObjectURL(blob);
+      setResumeUrl(url);
+    };
 
-  //     loadResume();
-  // }, [imagePath]);
+    loadResume();
+  }, [imagePath]);
   return (
     <Link
       to={`/resume/${id}`}
@@ -41,7 +42,7 @@ const ResumeCard = ({
           <ScoreCircle score={feedback.overallScore} />
         </div>
       </div>
-      {/* {resumeUrl && (
+      {resumeUrl && (
         <div className="gradient-border animate-in fade-in duration-1000">
           <div className="w-full h-full">
             <img
@@ -51,7 +52,7 @@ const ResumeCard = ({
             />
           </div>
         </div>
-      )} */}
+      )}
 
       <div className="gradient-border animate-in fade-in duration-1000">
         <div className="w-full h-full">
